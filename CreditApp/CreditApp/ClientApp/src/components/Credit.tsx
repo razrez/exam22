@@ -21,7 +21,7 @@ export function Credit() {
     const [name, setName] = useState("")
     const [surname, setSurname] = useState("")
     const [patronymic, setPatronymic] = useState("")
-    const [passportSeries, setPassportSeries] = useState<string>("")
+    const [passportSeries, setPassportSeries] = useState("")
     const [passportNumber, setPassportNumber] = useState<string>("")
     const [passportIssuer, setPassportIssuer] = useState("")
     const [passportIssueDate, setPassportIssueDate] = useState<Date>(new Date())
@@ -151,7 +151,7 @@ export function Credit() {
                     <label>Судимость</label>
                     <select className="w-25 mb-3"
                             onChange={(e) => {
-                                if (e.target.value == "true")
+                                if (e.target.value === "true")
                                     setJudging(true);
                                 else
                                     setJudging(false);
@@ -244,14 +244,14 @@ export function Credit() {
                                let result = Number.parseInt(e.target.value);
                                if (!isNaN(result))
                                    setCarAge(result)
-                               if (e.target.value == "")
+                               if (e.target.value === "")
                                    setCarAge(0)
                            }}/>
 
                     <label>Наличие других кредитов</label>
                     <select className="w-25 mb-3"
                             onChange={(e) => {
-                                if (e.target.value == "true")
+                                if (e.target.value === "true")
                                     setOtherCredits(true);
                                 else
                                     setOtherCredits(false);
@@ -268,7 +268,7 @@ export function Credit() {
                                let result = Number.parseInt(e.target.value);
                                if (!isNaN(result))
                                    setAmount(result)
-                               if (e.target.value == "")
+                               if (e.target.value === "")
                                    setAmount(0)
                            }}/>
 
