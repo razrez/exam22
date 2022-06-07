@@ -1,12 +1,10 @@
-﻿import React, {useState} from 'react';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import "bootstrap/dist/css/bootstrap.min.css";
+﻿import React from 'react';
 import {EmploymentEnum} from "../enums/EmploymentEnum";
 import {PurposeEnum} from "../enums/PurposeEnum";
 import {DepositEnum} from "../enums/DepositEnum";
-import {findDOMNode} from "react-dom";
+import * as Yup from "yup";
+import {useForm} from "react-hook-form";
+import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 
 type UserSubmit = {
     fullname: string; // ФИО
@@ -25,81 +23,50 @@ type UserSubmit = {
     credit: number; //Сумма кредита
 };
 
-const schema = Yup.object().shape({
-    fullname: Yup.string()
-        .required('ФИО необходимо')
-        .min(3, 'ФИО должно иметь как минимум 3 символа')
-        .max(60, "для ФИО допустимо не больше 40 символов"),
-    passportSeries: Yup.number()
-        .required('серия необходима')
-        .min(1, 'серия должна иметь как минимум 1 символ')
-        .max(999, 'для серии паспорта допустимо не больше 3 символов'),
-    passportNumber: Yup.number()
-        .required('номер необходим')
-        .min(1, 'серия должна иметь как минимум 1 символ')
-        .max(999999, 'для серии паспорта допустимо не больше 6 символов'),
-    passportIssuer: Yup.string()
-        .required('необходимо указать кем выдан пасспорт')
-        .min(2,'хотя бы 2 символа')
-        .max(100, 'максимум 100 символов'),
-    passportIssueDate: Yup.date()
-        .required('укажите дату выдачи')
-        .min(new Date("1850-01-16"), 'это слишком давно!!'),
-    passportRegistrationPlace: Yup.string()
-        .required('укажите место прописки')
-        .min(3)
-        .max(60),
-    age: Yup.number()
-        .required()
-        .min(18, 'кредит выдаётся лицам, достигшим возраст 18 лет')
-        .max(150, 'введите реальный возраст'),
-    hasCrimeCertificate: Yup.bool().notRequired(),
-    employment: Yup.number().required(),
-    purpose: Yup.number().required(),
-    deposit: Yup.number().required(),
-    carAge: Yup.number()
-        .required('укажите возраст авто')
-        .min(0, 'некорректный возраст авто')
-        .max(150, 'некорректный возраст авто')
-        .oneOf([Yup.ref('deposit'), 2], 'Если в залоге машина, укажите возраст авто'),
-    alreadyHasCredits: Yup.bool(),
-    credit: Yup.number()
-        .required('укажите желаемую сумму кредита')
-        .positive('некорректый ввод')
-});
+const TryCredit: React.FC = () => {
 
-type UserSubmitForm = {
-    fullname: string;
-    
-    
-    username: number;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    acceptTerms: boolean;
-};
-
-const SendForm: React.FC = () => {
-    
     //My validation schema
-    const validationSchema = Yup.object().shape({
-        fullname: Yup.string().required('Fullname is required'),
-        username: Yup.number()
-            .required('Username is required')
+    const schema = Yup.object().shape({
+        fullname: Yup.string()
+            .required('ФИО необходимо')
+            .min(3, 'ФИО должно иметь как минимум 3 символа')
+            .max(60, "для ФИО допустимо не больше 40 символов"),
+        passportSeries: Yup.number()
+            .required('серия необходима')
+            .min(1, 'серия должна иметь как минимум 1 символ')
+            .max(999, 'для серии паспорта допустимо не больше 3 символов'),
+        passportNumber: Yup.number()
+            .required('номер необходим')
+            .min(1, 'серия должна иметь как минимум 1 символ')
+            .max(999999, 'для серии паспорта допустимо не больше 6 символов'),
+        passportIssuer: Yup.string()
+            .required('необходимо указать кем выдан пасспорт')
+            .min(2,'хотя бы 2 символа')
+            .max(100, 'максимум 100 символов'),
+        passportIssueDate: Yup.date()
+            .required('укажите дату выдачи')
+            .min(new Date("1850-01-16"), 'это слишком давно!!'),
+        passportRegistrationPlace: Yup.string()
+            .required('укажите место прописки')
             .min(3)
-            .max(50),
-        email: Yup.string()
-            .required('Email is required')
-            .email('Email is invalid'),
-        password: Yup.string()
-            .required('Password is required')
-            .min(6, 'Password must be at least 6 characters')
-            .max(40, 'Password must not exceed 40 characters'),
-        confirmPassword: 
-            Yup.string() 
-            .required('Confirm Password is required')
-            .oneOf([Yup.ref('password'), '123123'], 'Confirm Password does not match'),
-        acceptTerms: Yup.bool().default(true)
+            .max(60),
+        age: Yup.number()
+            .required()
+            .min(18, 'кредит выдаётся лицам, достигшим возраст 18 лет')
+            .max(150, 'введите реальный возраст'),
+        hasCrimeCertificate: Yup.bool().notRequired(),
+        employment: Yup.number().required(),
+        purpose: Yup.number().required(),
+        deposit: Yup.number().required(),
+        carAge: Yup.number()
+            .required('укажите возраст авто')
+            .min(0, 'некорректный возраст авто')
+            .max(150, 'некорректный возраст авто')
+            .oneOf([Yup.ref('deposit'), 2], 'Если в залоге машина, укажите возраст авто'),
+        alreadyHasCredits: Yup.bool(),
+        credit: Yup.number()
+            .required('укажите желаемую сумму кредита')
+            .positive('некорректый ввод')
     });
     
     //передаем правила валидации хуку useForm, используя yupResolver()
@@ -109,15 +76,15 @@ const SendForm: React.FC = () => {
         handleSubmit, //handle form submit
         reset, //reset the form
         formState: { errors } //contains errors
-    } = useForm<UserSubmitForm>({
-        resolver: yupResolver(validationSchema)
+    } = useForm<UserSubmit>({
+        resolver: yupResolver(schema)
     });
-    
+
     //когда форма валидна и отправлена, вызывается onSubmit() и данные логируются
-    const onSubmit = (data: UserSubmitForm) => {
+    const onSubmit = (data: UserSubmit) => {
         console.log(JSON.stringify(data, null, 2));
     };
-
+    
     return (
         <div className="register-form">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -200,4 +167,4 @@ const SendForm: React.FC = () => {
     );
 };
 
-export default SendForm;
+export default TryCredit;
