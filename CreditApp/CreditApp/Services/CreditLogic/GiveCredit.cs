@@ -1,4 +1,4 @@
-﻿namespace Exam.Services.CreditLogic;
+﻿namespace CreditApp.Services.CreditLogic;
 
 public class GiveCredit: IGiveCredit
 {

@@ -1,4 +1,4 @@
-﻿namespace Exam.Services.CreditLogic;
+﻿namespace CreditApp.Services.CreditLogic;
 
 public interface IGiveCredit
 {

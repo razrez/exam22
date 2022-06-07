@@ -1,4 +1,4 @@
-﻿namespace Exam.Services;
+﻿namespace CreditApp.Services;
 
 public interface ICrimesCheck
 {
