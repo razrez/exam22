@@ -12,13 +12,12 @@ namespace CreditApp.Controllers;
 
 public class GiveCreditController : ControllerBase
 {
-    private readonly ICrimesCheck _crimesCheck;
-    private readonly IGiveCredit _giveCredit;
+    private readonly ICrimesCheck _crimesCheck; // псевдо-сервис проверки судимости
+    private readonly IGiveCredit _giveCredit; 
 
     public GiveCreditController(IGiveCredit giveCredit)
     {
         var mock = new Mock<ICrimesCheck>();
-        
         mock.Setup(s => s.HasCrimes(It.IsAny<string>()))
             .ReturnsAsync(new Random().Next(100) % 2 == 0);
         
@@ -29,10 +28,10 @@ public class GiveCreditController : ControllerBase
     [HttpPost("credit")]
     public async Task<IActionResult> Post([FromBody]CreditForm creditForm)
     {
-        //проверка судимости через псевдо-сервис
+        //check real crimes
         var realCrimesInfo = await _crimesCheck.HasCrimes(creditForm.Fullname!);
         
-        //решение на одобрение/неодобрение кредита
+        //accept or not a credit
         var result = await _giveCredit.ReturnResultTask(creditForm, realCrimesInfo);
         
         return new JsonResult(new { result = $"{result}"});

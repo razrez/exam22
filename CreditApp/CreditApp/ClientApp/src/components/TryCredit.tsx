@@ -98,20 +98,6 @@ const TryCredit: React.FC = () => {
         await reset();
     };
     
-    /*const submitForm = (async () => {
-        const rawResponse = await fetch('https://httpbin.org/post', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(JSON.stringify(data, null, 2))
-        });
-        const content = await rawResponse.json();
-
-        console.log(content);
-    })();*/
-    
     return (
         <div className="register-form">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -200,7 +186,7 @@ const TryCredit: React.FC = () => {
                         className={`form-control ${errors.hasCrimeCertificate ? 'is-invalid' : ''}`}
                     >
                         <option value="false">Нет</option>
-                        <option value="true">Есть</option>
+                        <option value="true">Да</option>
                     </select>
                     <div className="invalid-feedback">{errors.hasCrimeCertificate?.message}</div>
                 </div>
