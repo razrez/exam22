@@ -1,7 +1,9 @@
-﻿namespace CreditApp.Services.CreditLogic;
+﻿using CreditApp.Infrastructure;
+
+namespace CreditApp.Services.CreditLogic;
 
 public interface IGiveCredit
 {
     int TotalPoints { get; set; }
-    Task CalculateTotalPointsAsync();
+    string CalculateResult(CreditForm creditForm);
 }

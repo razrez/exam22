@@ -1,8 +1,15 @@
-﻿namespace CreditApp.Services.CreditLogic;
+﻿using CreditApp.Infrastructure;
+
+namespace CreditApp.Services.CreditLogic;
 
 public class GiveCredit: IGiveCredit
 {
     public int TotalPoints { get; set; }
+    public string CalculateResult(CreditForm creditForm)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task CalculateTotalPointsAsync()
     {
         Console.WriteLine("Начало метода PrintAsync"); // выполняется синхронно
