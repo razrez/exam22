@@ -15,6 +15,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.2" />
+        <PackageReference Include="Moq" Version="4.18.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -27,6 +28,10 @@
     <ItemGroup>
       <TypeScriptCompile Include="ClientApp\src\App.tsx" />
       <TypeScriptCompile Include="ClientApp\src\components\Home.tsx" />
+      <TypeScriptCompile Include="ClientApp\src\components\TryCredit.tsx" />
+      <TypeScriptCompile Include="ClientApp\src\enums\DepositEnum.ts" />
+      <TypeScriptCompile Include="ClientApp\src\enums\EmploymentEnum.ts" />
+      <TypeScriptCompile Include="ClientApp\src\enums\PurposeEnum.ts" />
     </ItemGroup>
 
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

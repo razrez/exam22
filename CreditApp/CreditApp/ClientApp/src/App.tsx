@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route , Routes} from 'react-router';
 import { Layout } from './components/Layout';
-import { Home } from './components/Home';
 
 import './custom.css'
 import {FetchData} from "./components/FetchData";
+import TryCredit from "./components/TryCredit";
 
-function App() {
+const App: React.FC = () => {
     return (
         <Layout>
             <Routes>
-                <Route path='/' element={<Home/>} />
+                {/* <Route path='/' element={<Home/>} />*/}
+                <Route path='/' element={<TryCredit/>}/>
                 <Route path='/fetch-data' element={<FetchData/>} />
             </Routes>
         </Layout>
     );
-}
+};
 
 export default App;
