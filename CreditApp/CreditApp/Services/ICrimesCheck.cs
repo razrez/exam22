@@ -2,5 +2,5 @@
 
 public interface ICrimesCheck
 {
-    bool HasCrimes(string test);
+    Task<bool> HasCrimes(string test);
 }

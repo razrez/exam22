@@ -1,6 +1,4 @@
-using CreditApp.Services;
 using CreditApp.Services.CreditLogic;
-using Moq;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IGiveCredit, GiveCredit>();
-builder.Services.AddScoped<ICrimesCheck>();
 
 var app = builder.Build();
 

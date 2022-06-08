@@ -1,5 +1,4 @@
 ﻿using CreditApp.Services;
-using CreditApp.Services.CreditLogic;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -14,14 +13,19 @@ public class GiveCreditController : ControllerBase
     public GiveCreditController()
     {
         var mock = new Mock<ICrimesCheck>();
+        
         mock.Setup(s => s.HasCrimes(It.IsAny<string>()))
-            .Returns(new Random().Next(100) % 2 == 0);
+            .ReturnsAsync(new Random().Next(100) % 2 == 0);
+        
         _crimesCheck = mock.Object;
     }
 
     [HttpPost("credit")]
-    public IActionResult Post()
+    public async Task<IActionResult> Post()
     {
-        return new JsonResult( new{  result = "post" });
+        var test = await _crimesCheck.HasCrimes("123123");
+        return test ? 
+            new JsonResult( new { result = "У клиента есть судимость!" }) 
+            : new JsonResult( new { result = "У клиента нет судимости :)" });
     }
 }
