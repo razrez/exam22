@@ -7,6 +7,9 @@ import {EmploymentEnum} from "../enums/EmploymentEnum";
 import {PurposeEnum} from "../enums/PurposeEnum";
 import {DepositEnum} from "../enums/DepositEnum";
 import {number} from "yup";
+import axios from "axios";
+import {IsCreditDtoValid} from "../Validator";
+import {ICreditDto} from "../dto/ICreditDto";
 
 type UserSubmit = {
     fullname: string; // ФИО
@@ -82,9 +85,31 @@ const TryCredit: React.FC = () => {
     });
 
     //когда форма валидна и отправлена, вызывается onSubmit() и данные логируются
-    const onSubmit = (data: UserSubmit) => {
+    /*const onSubmit = (data: UserSubmit) => {
+        console.log(JSON.stringify(data, null, 2));
+    };*/
+    const onSubmit = async (data: UserSubmit) => {
+        let result = document.getElementsByClassName("result")[0];
+        result.innerHTML = "&nbsp;";
+        axios.post("give/credit", data)
+            .then(r => result.innerHTML = r.data)
+            .catch(r => console.log(r));
         console.log(JSON.stringify(data, null, 2));
     };
+    
+    /*const submitForm = (async () => {
+        const rawResponse = await fetch('https://httpbin.org/post', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(JSON.stringify(data, null, 2))
+        });
+        const content = await rawResponse.json();
+
+        console.log(content);
+    })();*/
     
     return (
         <div className="register-form">
@@ -251,7 +276,7 @@ const TryCredit: React.FC = () => {
                         }`}
                     />
                     <label htmlFor="acceptTerms" className="form-check-label">
-                        уже еть кредит?
+                        уже еcть кредит?
                     </label>
                     <div className="invalid-feedback">{errors.alreadyHasCredits?.message}</div>
                 </div>

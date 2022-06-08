@@ -3,19 +3,10 @@
 namespace CreditApp.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("give")]
 public class GiveCreditController : ControllerBase
 {
-    [HttpGet]
-    public IActionResult Get()
-    {
-        return new JsonResult(new
-        {
-            result = "get"
-        });
-    }
-
-    [HttpPost]
+    [HttpPost("credit")]
     public IActionResult Post()
     {
         return new JsonResult(new
