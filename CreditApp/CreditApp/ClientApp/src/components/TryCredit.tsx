@@ -98,20 +98,6 @@ const TryCredit: React.FC = () => {
         await reset();
     };
     
-    /*const submitForm = (async () => {
-        const rawResponse = await fetch('https://httpbin.org/post', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(JSON.stringify(data, null, 2))
-        });
-        const content = await rawResponse.json();
-
-        console.log(content);
-    })();*/
-    
     return (
         <div className="register-form">
             <form onSubmit={handleSubmit(onSubmit)}>

@@ -8,17 +8,6 @@ const context =  [
   "/give", "/weatherforecast"
 ];
 
-/*module.exports = function(app) {
-  const appProxy = createProxyMiddleware(context, {
-    target: target,
-    secure: false,
-    headers: {
-      Connection: 'Keep-Alive'
-    }
-  });
-
-  app.use(appProxy);
-};*/
 module.exports = function(app) {
   const appProxy = createProxyMiddleware(context, {
     target: target,
