@@ -1,8 +1,14 @@
+using CreditApp.Services;
+using CreditApp.Services.CreditLogic;
+using Moq;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IGiveCredit, GiveCredit>();
+builder.Services.AddScoped<ICrimesCheck>();
 
 var app = builder.Build();
 

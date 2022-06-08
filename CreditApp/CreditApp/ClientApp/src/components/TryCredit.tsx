@@ -1,4 +1,4 @@
-﻿import React, {useState} from 'react';
+﻿import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -6,10 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {EmploymentEnum} from "../enums/EmploymentEnum";
 import {PurposeEnum} from "../enums/PurposeEnum";
 import {DepositEnum} from "../enums/DepositEnum";
-import {number} from "yup";
 import axios from "axios";
-import {IsCreditDtoValid} from "../Validator";
-import {ICreditDto} from "../dto/ICreditDto";
 
 type UserSubmit = {
     fullname: string; // ФИО
@@ -89,7 +86,7 @@ const TryCredit: React.FC = () => {
         console.log(JSON.stringify(data, null, 2));
     };*/
     const onSubmit = async (data: UserSubmit) => {
-        let result = document.getElementsByClassName("result modal-dialog-centered")[0];
+        let result = document.getElementsByClassName("result")[0];
         result.innerHTML = "&nbsp;";
         let jsonrequest = JSON.stringify(data, null, 2);
         console.log(jsonrequest);
@@ -98,8 +95,9 @@ const TryCredit: React.FC = () => {
             .catch(r => console.log(r));
     };
     
+    //очищение результата формы и всех полей формы
     const clearResult = async () =>{
-        let result = await document.getElementsByClassName("result modal-dialog-centered")[0];
+        let result = await document.getElementsByClassName("result")[0];
         result.innerHTML = "&nbsp;";
         await reset();
     };
@@ -289,7 +287,7 @@ const TryCredit: React.FC = () => {
                 </div>
                 
                 
-                <label className="result modal-dialog-centered" >&nbsp;</label>
+                <label className="result" >&nbsp;</label>
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary">
                         Register
