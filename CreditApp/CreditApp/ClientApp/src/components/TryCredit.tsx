@@ -186,7 +186,7 @@ const TryCredit: React.FC = () => {
                         className={`form-control ${errors.hasCrimeCertificate ? 'is-invalid' : ''}`}
                     >
                         <option value="false">Нет</option>
-                        <option value="true">Есть</option>
+                        <option value="true">Да</option>
                     </select>
                     <div className="invalid-feedback">{errors.hasCrimeCertificate?.message}</div>
                 </div>
