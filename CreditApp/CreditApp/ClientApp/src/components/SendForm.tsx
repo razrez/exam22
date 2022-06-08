@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {EmploymentEnum} from "../enums/EmploymentEnum";
 import {PurposeEnum} from "../enums/PurposeEnum";
 import {DepositEnum} from "../enums/DepositEnum";
-import {findDOMNode} from "react-dom";
 
 type UserSubmit = {
     fullname: string; // ФИО
