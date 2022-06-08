@@ -89,13 +89,19 @@ const TryCredit: React.FC = () => {
         console.log(JSON.stringify(data, null, 2));
     };*/
     const onSubmit = async (data: UserSubmit) => {
-        let result = document.getElementsByClassName("result")[0];
+        let result = document.getElementsByClassName("result modal-dialog-centered")[0];
         result.innerHTML = "&nbsp;";
         let jsonrequest = JSON.stringify(data, null, 2);
         console.log(jsonrequest);
         axios.post("give/credit", jsonrequest)
             .then((r) => result.innerHTML = r.data['result'] + " успешен")
             .catch(r => console.log(r));
+    };
+    
+    const clearResult = async () =>{
+        let result = await document.getElementsByClassName("result modal-dialog-centered")[0];
+        result.innerHTML = "&nbsp;";
+        await reset();
     };
     
     /*const submitForm = (async () => {
@@ -283,14 +289,14 @@ const TryCredit: React.FC = () => {
                 </div>
                 
                 
-                <label className="result">&nbsp;</label>
+                <label className="result modal-dialog-centered" >&nbsp;</label>
                 <div className="form-group">
                     <button type="submit" className="btn btn-primary">
                         Register
                     </button>
                     <button
                         type="button"
-                        onClick={() => reset()}
+                        onClick={() => clearResult()}
                         className="btn btn-warning float-right"
                     >
                         Reset
