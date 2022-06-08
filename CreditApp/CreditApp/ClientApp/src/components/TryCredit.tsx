@@ -82,16 +82,12 @@ const TryCredit: React.FC = () => {
     });
 
     //когда форма валидна и отправлена, вызывается onSubmit() и данные логируются
-    /*const onSubmit = (data: UserSubmit) => {
-        console.log(JSON.stringify(data, null, 2));
-    };*/
     const onSubmit = async (data: UserSubmit) => {
         let result = document.getElementsByClassName("result")[0];
         result.innerHTML = "&nbsp;";
-        let jsonrequest = JSON.stringify(data, null, 2);
-        console.log(jsonrequest);
-        axios.post("give/credit", jsonrequest)
-            .then((r) => result.innerHTML = r.data['result'] + " успешен")
+        console.log(data);
+        axios.post("give/credit", data)
+            .then((r) => result.innerHTML = r.data['result'])
             .catch(r => console.log(r));
     };
     
@@ -198,7 +194,7 @@ const TryCredit: React.FC = () => {
                 </div>
 
                 <div className="form-group">
-                    <label>Есть справка о наличии судимости?</label>
+                    <label>Клиент судим?</label>
                     <select
                         {...register('hasCrimeCertificate')}
                         className={`form-control ${errors.hasCrimeCertificate ? 'is-invalid' : ''}`}

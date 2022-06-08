@@ -1,4 +1,6 @@
-﻿using CreditApp.Services;
+﻿using CreditApp.Infrastructure;
+using CreditApp.Services;
+using CreditApp.Services.CreditLogic;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -6,11 +8,14 @@ namespace CreditApp.Controllers;
 
 [ApiController]
 [Route("give")]
+[Produces("applications/json")]
+
 public class GiveCreditController : ControllerBase
 {
     private readonly ICrimesCheck _crimesCheck;
+    private readonly IGiveCredit _giveCredit;
 
-    public GiveCreditController()
+    public GiveCreditController(IGiveCredit giveCredit)
     {
         var mock = new Mock<ICrimesCheck>();
         
@@ -18,14 +23,18 @@ public class GiveCreditController : ControllerBase
             .ReturnsAsync(new Random().Next(100) % 2 == 0);
         
         _crimesCheck = mock.Object;
+        _giveCredit = giveCredit;
     }
 
     [HttpPost("credit")]
-    public async Task<IActionResult> Post()
+    public async Task<IActionResult> Post([FromBody]CreditForm creditForm)
     {
-        var test = await _crimesCheck.HasCrimes("123123");
-        return test ? 
-            new JsonResult( new { result = "У клиента есть судимость!" }) 
-            : new JsonResult( new { result = "У клиента нет судимости :)" });
+        //проверка судимости через псевдо-сервис
+        var realCrimesInfo = await _crimesCheck.HasCrimes(creditForm.Fullname!);
+        
+        //решение на одобрение/неодобрение кредита
+        var result = await _giveCredit.ReturnResultTask(creditForm, realCrimesInfo);
+        
+        return new JsonResult(new { result = $"{result}"});
     }
 }
