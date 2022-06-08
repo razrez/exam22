@@ -91,10 +91,11 @@ const TryCredit: React.FC = () => {
     const onSubmit = async (data: UserSubmit) => {
         let result = document.getElementsByClassName("result")[0];
         result.innerHTML = "&nbsp;";
-        axios.post("give/credit", data)
-            .then(r => result.innerHTML = r.data)
+        let jsonrequest = JSON.stringify(data, null, 2);
+        console.log(jsonrequest);
+        axios.post("give/credit", jsonrequest)
+            .then((r) => result.innerHTML = r.data['result'] + " успешен")
             .catch(r => console.log(r));
-        console.log(JSON.stringify(data, null, 2));
     };
     
     /*const submitForm = (async () => {
