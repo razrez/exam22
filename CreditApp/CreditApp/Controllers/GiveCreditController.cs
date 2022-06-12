@@ -17,6 +17,7 @@ public class GiveCreditController : ControllerBase
 
     public GiveCreditController(IGiveCredit giveCredit)
     {
+        //псевдо реаизация сервиса
         var mock = new Mock<ICrimesCheck>();
         mock.Setup(s => s.HasCrimes(It.IsAny<string>()))
             .ReturnsAsync(new Random().Next(100) % 2 == 0);
@@ -28,12 +29,29 @@ public class GiveCreditController : ControllerBase
     [HttpPost("credit")]
     public async Task<IActionResult> Post([FromBody]CreditForm creditForm)
     {
-        //check real crimes
-        var realCrimesInfo = await _crimesCheck.HasCrimes(creditForm.Fullname!);
+        //check real crimes 
+        var realCrimesInfo = _crimesCheck.HasCrimes(creditForm.Fullname!);
         
         //accept or not a credit
-        var result = _giveCredit.ReturnResultTask(creditForm, realCrimesInfo);
-        result.Wait(2);
-        return new JsonResult(new { result = $"{result.Result}"});
+        string jsonRes;
+        
+        
+        #region Хочу проверить, что вернется раньше
+
+        if (realCrimesInfo.IsCompletedSuccessfully)
+        {
+            var result = _giveCredit.ReturnResultTask(creditForm, realCrimesInfo.Result);
+            result.Wait(3);
+            jsonRes = result.Result;
+        }
+        else
+        {
+            jsonRes = await Task
+                .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result));
+        }
+
+        #endregion
+        
+        return new JsonResult(new { result = jsonRes });
     }
 }
