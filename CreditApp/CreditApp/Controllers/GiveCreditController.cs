@@ -32,8 +32,8 @@ public class GiveCreditController : ControllerBase
         var realCrimesInfo = await _crimesCheck.HasCrimes(creditForm.Fullname!);
         
         //accept or not a credit
-        var result = await _giveCredit.ReturnResultTask(creditForm, realCrimesInfo);
-        
-        return new JsonResult(new { result = $"{result}"});
+        var result = _giveCredit.ReturnResultTask(creditForm, realCrimesInfo);
+        result.Wait(2);
+        return new JsonResult(new { result = $"{result.Result}"});
     }
 }
