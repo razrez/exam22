@@ -34,20 +34,21 @@ public class GiveCreditController : ControllerBase
         
         //accept or not a credit
         string? jsonRes = null;
-        
-        
+
+        realCrimesInfo.Wait(5000);
         #region Хочу проверить, что вернется раньше
 
         if (realCrimesInfo.IsCompletedSuccessfully)
         {
             jsonRes = await Task
-                .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result)) + $"{ DateTime.Now.Second}";
+                .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result)) + $" ||{ DateTime.Now.Millisecond}||";
             
             var result = _giveCredit.ReturnResultTask(creditForm, realCrimesInfo.Result);
-            result.Wait(3);
-            result.Start();
             
-            jsonRes += $"\n{result.Result}" + $"{ DateTime.Now.Second}";
+            //result.Wait(200000); //System.IndexOutOfRangeException: Index was outside the bounds of the array.
+            //result.Start();//Запуск не может быть вызван для задачи, которая завершена.
+            
+            jsonRes += $"{result.Result}" + $" ||{ DateTime.Now.Millisecond}||";
         }
         #endregion
         
