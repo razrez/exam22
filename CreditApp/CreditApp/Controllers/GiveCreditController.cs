@@ -33,23 +33,22 @@ public class GiveCreditController : ControllerBase
         var realCrimesInfo = _crimesCheck.HasCrimes(creditForm.Fullname!);
         
         //accept or not a credit
-        string jsonRes;
+        string? jsonRes = null;
         
         
         #region Хочу проверить, что вернется раньше
 
         if (realCrimesInfo.IsCompletedSuccessfully)
         {
+            jsonRes = await Task
+                .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result)) + $"{ DateTime.Now.Second}";
+            
             var result = _giveCredit.ReturnResultTask(creditForm, realCrimesInfo.Result);
             result.Wait(3);
-            jsonRes = result.Result;
+            result.Start();
+            
+            jsonRes += $"\n{result.Result}" + $"{ DateTime.Now.Second}";
         }
-        else
-        {
-            jsonRes = await Task
-                .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result));
-        }
-
         #endregion
         
         return new JsonResult(new { result = jsonRes });
