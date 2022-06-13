@@ -40,15 +40,15 @@ public class GiveCreditController : ControllerBase
 
         if (realCrimesInfo.IsCompletedSuccessfully)
         {
-            jsonRes += "изначальный тред:" + Thread.CurrentThread.ManagedThreadId + "\n"; 
+            jsonRes += "изначальный тред айди:" + Thread.CurrentThread.ManagedThreadId + "\n"; 
             
             var task1 = await Task
                 .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result) + $" || Task.Run {DateTime.Now}||");
             
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             jsonRes += $"{task1}" + $" || Task.End{ DateTime.Now}|| " + "\n";
-            jsonRes += "Конечный тред:" + Thread.CurrentThread.ManagedThreadId + "\n"; 
+            jsonRes += "Конечный тред айди:" + Thread.CurrentThread.ManagedThreadId + "\n"; 
         }
         #endregion
         
