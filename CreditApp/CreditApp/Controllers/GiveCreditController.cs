@@ -40,15 +40,15 @@ public class GiveCreditController : ControllerBase
 
         if (realCrimesInfo.IsCompletedSuccessfully)
         {
-            var task1 = Task
+            jsonRes += "изначальный тред:" + Thread.CurrentThread.ManagedThreadId + "\n"; 
+            
+            var task1 = await Task
                 .Run(() => _giveCredit.CalculateResult(creditForm, realCrimesInfo.Result) + $" || Task.Run {DateTime.Now}||");
-            //task1.Wait(2000);
-            Thread.Sleep(2000);//Index was outside the bounds of the array
             
-            //result.Wait(200000); //System.IndexOutOfRangeException: Index was outside the bounds of the array.
-            //result.Start();//Запуск не может быть вызван для задачи, которая завершена.
-            
-            jsonRes += $"{await task1}" + $" || Task.End{ DateTime.Now}||";
+            Thread.Sleep(1000);
+
+            jsonRes += $"{task1}" + $" || Task.End{ DateTime.Now}|| " + "\n";
+            jsonRes += "Конечный тред:" + Thread.CurrentThread.ManagedThreadId + "\n"; 
         }
         #endregion
         
