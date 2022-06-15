@@ -8,8 +8,10 @@ public class GiveCredit: IGiveCredit
     public int TotalPoints { get; set; }
     public async Task<string> ReturnResultTask(CreditForm creditForm, bool realCrimesInfo)
     {
+        //походу это лишний метод, я перестарался :)
         var res = await 
             Task.Run(() => CalculateResult(creditForm, realCrimesInfo));
+        /*var res = CalculateResult(creditForm, realCrimesInfo);*/
         
         return res;
     }
